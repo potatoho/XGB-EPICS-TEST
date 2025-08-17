@@ -1,0 +1,23 @@
+
+file "db/ao.template" {pattern
+{P,    R,          PORT,        OFFSET, BITS,     EGUL, EGUF, PREC}
+{PLC:, HeaterSet,  plc_output,  1,      0xFFFF,   0,    1000, 0}
+}
+
+file "db/bi_bit.template" { pattern
+{P,           R,         PORT,             OFFSET,   ZNAM,   ONAM,  ZSV,       OSV,    SCAN}
+{PLC:,    Y0InB,     K2_Yn_In_Bit,     1,        Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr"}
+}
+
+file "db/bo_bit.template" { pattern
+{P,           R,          PORT,              OFFSET,   ZNAM,   ONAM}
+{PLC:,    Y0OutB,     K2_Yn_Out_Bit,     0,        Low,    High}
+{PLC:,    Y1OutB,     K2_Yn_Out_Bit,     5,        Low,    High}
+{PLC:,    Y2OutB,     K2_Yn_Out_Bit,     1,        Low,    High}
+}
+
+file "db/ai.template" { pattern
+{P,         R,      PORT,               OFFSET, BITS,  EGUL,  EGUF,   PREC,   SCAN}
+{PLC:,    TEMP,   K2_V3000_In_Word,   0,      0,   0,    100,    1,      "I/O Intr"}
+}
+
