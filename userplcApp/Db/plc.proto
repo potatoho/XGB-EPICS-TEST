@@ -1,0 +1,65 @@
+Terminator    = "";
+ReplyTimeout  = 1000;
+ReadTimeout   = 1000;
+ExtraInput    = Error;
+
+InTerminator  = "\x22";
+OutTerminator = "";
+
+
+#rx_all_seq {
+#    out "\x55\x01\x01\x66";   # Enable Rx01
+#    wait 100;
+#    in  "\x11\x01%1r";
+#    out "\x55\x01\x00\x66";   # Disable Rx01
+
+#    wait 500;                  # 안전 대기
+#    out "\x55\x02\x01\x66";   # Enable Rx02
+#    wait 100;
+#    in  "\x11\x02%1r";
+#    out "\x55\x02\x00\x66";   # Disable Rx02
+
+#    wait 50;
+#}
+
+
+# Rx01: Enable → wait → Read → Disable → inter-frame gap */
+read_rx01_seq {
+    out "\x55\x01\x01\x66";
+    wait 100;
+    in  "\x11\x01%2r";
+    wait 50;
+    out "\x55\x01\x00\x66";
+    wait 50;         
+    out "\x55\x02\x00\x66";
+    wait 50;
+}
+
+#Rx02: Enable → wait → Read → Disable → inter-frame gap */
+read_rx02_seq {
+    out "\x55\x02\x01\x66";
+    wait 100;
+    in  "\x11\x02%1r";
+    wait 50;
+    out "\x55\x02\x00\x66";
+    wait 50;
+    out "\x55\x01\x00\x66";
+    wait 50;
+}
+
+
+# ==== 개별 송신 (수동용) ====
+tx_01 {
+    out "\x33\x01%0.2r\x44";
+    wait 50;
+}
+
+tx_02 {
+    out "\x33\x02%0.1r\x44";
+    wait 50;
+}
+
+tx_03 {
+    out "\x33\x03%0.1r\x44";
+    wait 50;
+}
