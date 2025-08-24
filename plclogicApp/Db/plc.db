@@ -1,0 +1,76 @@
+record(ai, "PLC:Temp")
+{
+  field(DESC, "Current temperature")
+  field(DTYP, "asynInt32")
+  field(INP,  "@asynMask(K2_V3000_In_Word 0 0 1)MODBUS_DATA")
+  field(EGUL, "0")
+  field(EGUF, "100")
+  field(PREC, "1")
+  field(SCAN, "I/O Intr")
+  field(ASLO, "0.1")
+}
+
+record(ao, "PLC:HeaterSet")
+{
+  field(DESC, "Heater setpoint")
+  field(VAL,  "300")
+  field(PREC, "0")
+  field(LOPR, "0")
+  field(HOPR, "1000")
+  field(EGU,  "counts")
+  field(ASLO, "0.1")
+}
+
+record(bo, "PLC:HeaterOut") {
+  field(DESC, "Heater output command")
+  field(DTYP, "asynUInt32Digital")
+  field(OUT,  "@asynMask(K2_Yn_Out_Bit 0 0x1 1)MODBUS_DATA")
+  field(DOL, "PLC:Logic.VALA NPP NMS")
+  field(MASK, "0x1")
+  field(ZNAM, "Low")
+  field(ONAM, "High")
+  field(OMSL, "closed_loop")
+}
+
+record(bo, "PLC:ModeAuto")
+{
+  field(DESC, "0=Manual, 1=Auto")
+  field(ZNAM, "Manual")
+  field(ONAM, "Auto")
+  field(VAL,  "1")
+}
+
+record(bo, "PLC:ManHeaterCmd")
+{
+  field(DESC, "Manual heater command")
+  field(ZNAM, "Off")
+  field(ONAM, "On")
+  field(VAL,  "0")
+}
+
+record(aSub, "PLC:Logic")
+{
+  field(DESC, "Heater control logic")
+  field(SCAN, "Passive")
+
+  field(INPA, "PLC:Temp CP")
+  field(FTA,  "DOUBLE")
+
+  field(INPB, "PLC:HeaterSet CP")
+  field(FTB,  "DOUBLE")
+
+  # ModeAuto와 ManHeaterCmd는 bo → 내부적으로 ENUM, 
+  # aSub에서 DOUBLE로 맞춰주는 게 가장 안전
+  field(INPC, "PLC:ModeAuto CP")
+  field(FTC,  "DOUBLE")
+
+  field(INPD, "PLC:ManHeaterCmd CP")
+  field(FTD,  "DOUBLE")
+
+  field(FTVA, "LONG")
+  field(NOVA, "1")
+
+  field(SNAM, "logicProc")
+  field(INAM, "logicInit")
+  field(FLNK, "PLC:HeaterOut.PROC")
+}

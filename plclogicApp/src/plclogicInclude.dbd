@@ -1,0 +1,7 @@
+include "base.dbd"
+include "asyn.dbd"
+include "modbusSupport.dbd"
+include "drvAsynIPPort.dbd"
+
+function(logicInit)
+function(logicProc)
