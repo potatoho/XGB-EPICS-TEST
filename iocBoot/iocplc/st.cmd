@@ -23,10 +23,10 @@ asynSetOption("PLC", 0, "stop", "1")
 
 modbusInterposeConfig("PLC", 1, 2000, 0)
 
-drvModbusAsynConfigure("K2_Yn_In_Bit",     "PLC", 1, 1, 000,   040,   0, 100, "")
-drvModbusAsynConfigure("K2_Yn_Out_Bit",    "PLC", 1, 5, 00000, 040,   0, 1,   "")
-drvModbusAsynConfigure("K2_V3000_In_Word", "PLC", 1, 3, 100,   040,   1, 100, "")
-drvModbusAsynConfigure("plc_output",       "PLC", 1, 6, 100,   6,     1, 500, "")
+drvModbusAsynConfigure("K2_Yn_In_Bit",     "PLC", 1, 1, 000,   2,   0, 100, "")
+drvModbusAsynConfigure("K2_Yn_Out_Bit",    "PLC", 1, 5, 000,   6,   0, 1,   "")
+drvModbusAsynConfigure("K2_V3000_In_Word", "PLC", 1, 3, 100,   2,   1, 100, "")
+drvModbusAsynConfigure("plc_output",       "PLC", 1, 6, 100,   2,     1, 500, "")
 
 #- Set this to see messages from mySub
 #-var mySubDebug 1
